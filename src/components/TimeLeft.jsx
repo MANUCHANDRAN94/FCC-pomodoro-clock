@@ -15,8 +15,8 @@ function TimeLeft({handleStartStopClick, timerLabel ,
   return (
     <div>
       <p id="timer-label">{timerLabel}</p>
-      <p id="timer">{formattedTimeLeft}</p>
-      <button onClick={handleStartStopClick}>
+      <p id="time-left">{formattedTimeLeft}</p>
+      <button id="start_stop" onClick={handleStartStopClick}>
         {startStopButtonLabel}
       </button>
     </div>
