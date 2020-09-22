@@ -17,6 +17,23 @@ function App() {
     setTimeLeft(sessionLength);
   }, [sessionLength]);
 
+  //;isten to timeleft changes
+  //changes to break or break to session
+  useEffect(() => {
+    //if timeleft is zero
+    if (timeLeft === 0) {
+      //play the audio
+      audioElement.current.play();
+      if (currentSessionType === "Session") {
+        setCurrentSessionType("Break");
+        setTimeLeft(breakLength);
+      } else if (currentSessionType === "Break") {
+        setCurrentSessionType("Session");
+        setTimeLeft(sessionLength);
+      }
+    }
+  }, [breakLength, currentSessionType, sessionLength, timeLeft]);
+
   const decBreakLengthByOneMinute = () => {
     const newBreakLength = breakLength - 60;
     if (newBreakLength > 0) {
@@ -25,10 +42,10 @@ function App() {
   };
   const incBreakLengthByOneMinute = () => {
     const newBreakLength = breakLength + 60;
-    if( newBreakLength <= 60 * 60){
+    if (newBreakLength <= 60 * 60) {
       setBreakLength(newBreakLength);
-    }else{
-      setBreakLength(60*60);
+    } else {
+      setBreakLength(60 * 60);
     }
   };
 
@@ -40,10 +57,10 @@ function App() {
   };
   const incSessionLengthByOneMinute = () => {
     const newSessionLength = sessionLength + 60;
-    if(newSessionLength <= 60 * 60){
+    if (newSessionLength <= 60 * 60) {
       setSessionLength(newSessionLength);
-    }else{
-      setSessionLength(60*60);
+    } else {
+      setSessionLength(60 * 60);
     }
   };
 
@@ -56,24 +73,7 @@ function App() {
       setIntervalId(null);
     } else {
       const newIntervalId = setInterval(() => {
-        setTimeLeft((prevTimeLeft) => {
-          const newTimeLeft = prevTimeLeft - 1;
-          if (newTimeLeft >= 0) {
-            return newTimeLeft;
-          }
-          //time left is less than zero
-          audioElement.current.play();
-          //if session: switch to break . setTimeLeft to breakSessionLength
-          if (currentSessionType === "Session") {
-            setCurrentSessionType("Break");
-            return breakLength;
-          }
-          //if break: switch to session set Timer to sessionLength
-          else if (currentSessionType === "Break") {
-            setCurrentSessionType("Session");
-            return sessionLength;
-          }
-        });
+        setTimeLeft((prevTimeLeft) => prevTimeLeft - 1);
       }, 100);
       setIntervalId(newIntervalId);
     }

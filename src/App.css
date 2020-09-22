@@ -1,5 +1,26 @@
 .App {
   text-align: center;
+  height: 90vh;
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: aquamarine;
+}
+
+button{
+ width: 60px;
+  padding:.2em 1em;
+  font-weight: 700;
+  margin: 1em;
+  border-radius: 20px;
+  outline: none;
+}
+button:active{
+  transform: scale(.9);
+}
+#reset{
+  align-self: baseline;
 }
 
 .App-logo {
